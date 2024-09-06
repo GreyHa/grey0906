@@ -17,7 +17,7 @@ clientinfo2 = {
     'port':'9223',
 }
 
-client = Web(clientinfo=clientinfo2)
+client = Web(clientinfo=clientinfo)
 search_url = el.google_search({'q':'삼쩜삼','tbm':'nws','tbs':'qdr:w'})
 client.driver.get(search_url)
 item = action.get_google_search_item(client, item_index=0)
