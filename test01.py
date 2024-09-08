@@ -1,29 +1,28 @@
-from __chromedriver_autoinstall__ import chrome_driver_install_path
 from automation_framework.Web import Web
 import element.element_test01 as el
 import action.action_test01 as action
 from support.support_module import dict_list_to_csv
+from __chromedriver_autoinstall__ import chrome_driver_install_path
+from support.support_module import json_load
+import os, time
+
 #/Applications//Google\ Chrome.app/Contents/MacOS/Google\ Chrome --remote-debugging-port=9223 --user-data-dir="~/Chrome/Chrome-user01"
 
+base_path = os.path.dirname(os.path.abspath(__file__))
 chrome_driver_path = chrome_driver_install_path()
-
-clientinfo = {
-    'executable_path':chrome_driver_path
-}
-
-clientinfo2 = {
-    'executable_path':chrome_driver_path,
-    'ip':'127.0.0.1',
-    'port':'9223',
-}
+config_file_path = f'{base_path}/conf/test01.json'
+clientinfo = json_load(config_file_path, none_data={})
+clientinfo['executable_path'] = chrome_driver_path
+clientinfo['screenshot_path'] = f'{base_path}/screenshot'
+clientinfo['log_file_path'] = f'{base_path}/log/{time.strftime('%Y_%m_%d_%H_%M_%S',time.localtime(time.time()))}.txt'
 
 client = Web(clientinfo=clientinfo)
 search_url = el.google_search({'q':'삼쩜삼','tbm':'nws','tbs':'qdr:w'})
 client.driver.get(search_url)
-item = action.get_google_search_item(client, item_index=0)
 
-#items = action.get_google_search_items(client)
-#for item_index in range(len(items)):
-#    print(f'{item_index}: {items[item_index]}')
+#item = action.get_google_search_item(client, item_index=0)
+items = action.get_google_search_items(client)
+for item_index in range(len(items)):
+    print(f'{item_index}: {items[item_index]}')
 
-dict_list_to_csv('./test01_result.csv', data_list=[item], col=['title','url'], separator=',')
+dict_list_to_csv('./test01_result.csv', data_list=items, col=['title','url'], separator=',')

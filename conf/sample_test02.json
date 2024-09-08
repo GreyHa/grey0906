@@ -1,0 +1,8 @@
+{
+    "device" : {
+        "automationName": "UiAutomator2",
+        "platformName": "Android",
+        "udid": "emulator-5554",
+        "enableMultiWindows": true
+    }
+}

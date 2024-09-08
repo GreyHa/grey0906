@@ -3,7 +3,6 @@ import requests, sys, os, subprocess
 import chromedriver_autoinstaller, pyzipper
 import shutil
 
-
 #win64
 #mac-arm64
 #win32
@@ -102,13 +101,6 @@ def chrome_driver_install_path():
             elif chk_ver_split(v1=chrome_ver, v2=driver_ver, count=3) == True:
                 count3.append(driver_info)
 
-
-    #print(count4)
-    #print(count3)
-    #print(chrome_ver)
-
-
-    
     if count4:
         chrome_path = download_url(count4[0])
     else:
@@ -117,11 +109,8 @@ def chrome_driver_install_path():
         else:
             return chromedriver_autoinstaller.install()
 
-    #print(chrome_path)
-
     driver_folder_ver = f'{driver_folder}/{chrome_ver}'
     path_create(driver_folder_ver)
-
 
     if platform == 'win64':
         result = f'{driver_folder_ver}/chromedriver-win64/chromedriver.exe'
@@ -140,6 +129,3 @@ def chrome_driver_install_path():
         subprocess.run(run_path)
     
     return result
-
-
-#chrome_driver_install_path()
