@@ -13,6 +13,13 @@ python 사용 모듈
 pip install selenium==4.24.0
 pip install Appium-Python-Client==4.1.0
 pip install PyQt6==6.7.1
+
+사용하지 않지만 서브 모듈에서 사용 중이라 설치 필요한 모듈
+pip install numpy==1.26.4
+pip install PyAutoGUI==0.9.54
+pip install opencv-python==4.5.5.62
+
+서브 모듈 업데이트
 git submodule init
 git submodule update
 git submodule foreach git checkout dev
