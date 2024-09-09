@@ -1,7 +1,9 @@
 import urllib.parse
 
-def google_search(query):
+def google_search_url(query:dict) -> str:
     '''
+        query: dict key와 value로 구성
+
         q: 검색어
         tbm: nws, shop, vid, 전체 검색인 경우 선언하지 않음
         tbs: 0 기본값
@@ -23,6 +25,7 @@ __google_search_news_item_index_reverse__ = 'div#search div#rso > div > div > di
 
 
 google_search_news_list_title = {'Target':'div#search div#rso > div > div > div div[role="heading"]'}
+
 def google_search_new_index_url(item_index:int=0) -> dict:
     if item_index >= 0:
         return {'Target':f'{__google_search_news_item_index__} a'.replace('{item_index}',str(item_index+1)),'ValueType':'href'}

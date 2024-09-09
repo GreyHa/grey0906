@@ -1,25 +1,28 @@
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
-from support.support_module import json_load, json_dump, path_create, now_time, text_create
+from support.support_module import json_load, json_dump, path_create, now_time
 from test03_tool_conf import page_template, page_data
 import sys, os, base64
 
+# 설정
 base_path = os.path.dirname(os.path.abspath(__file__))
 data_path = f'{base_path}/tooldata'
 token_data_file_path = f'{data_path}/token.json'
 tester_data_file_path = f'{data_path}/testerconf.json'
 test_data_file_path = f'{data_path}/testconf.json'
 path_create(data_path)
-
 token_data:dict = json_load(token_data_file_path, none_data={})
 tester_data:dict = json_load(tester_data_file_path, none_data={})
 test_data:dict = json_load(test_data_file_path, none_data={})
-
 tester_keys = ['이메일','이름','핸드폰 번호','생년월일']
 test_keys = ['테스트 명']
 
+
 class table_model():
+    '''
+        QTableView 모델 클래스
+    '''
     def __init__(self, qWindow, col_list:list, data:dict={}):
         self.qWindow = qWindow
         self.col_list = col_list
@@ -66,6 +69,9 @@ def main():
             self.__page_history__ = []
             self.setWindowTitle(self.__main_page__)
 
+            # page에 생성 할 UI 정보
+            # page에 따라 UI 패턴과 스타일 그리고 item 정보를 데이터화 하여 일괄 관리가 편하도록 구성
+            # 패턴 방식을 조금 더 개선하면 확장성 있고 편하게 개발 가능 할것 같습니다
             page_data['테스트 툴']['items'] = {
                 '타이틀 라벨':{'type':QLabel, 'setText':'테스트 툴'},
                 '토큰 획득':{'type':QPushButton, 'setText':'토큰 획득', 'clicked.connect': lambda: self.page_change('토큰 획득')},
@@ -74,7 +80,6 @@ def main():
                 '테스트 시작':{'type':QPushButton, 'setText':'테스트 시작', 'clicked.connect': lambda: self.page_change('테스트 시작')},
                 '종료':{'type':QPushButton, 'setText':'종료', 'clicked.connect': lambda: self.close()}
             }
-
 
             page_data['토큰 획득']['items'] = {
                 '타이틀 라벨':{'type':QLabel, 'setText':'토큰 획득'},
@@ -155,11 +160,16 @@ def main():
                 '시작':{'type':QPushButton, 'setText':'시작', 'clicked.connect': lambda: self.test_start('테스트 시작')}
             }
 
+            # 페이지 생성
             self.page_setting(page_data)
+            
+            # 페이지 초기화
             self.page_reset(self.__main_page__)
                 
         def __item__(self, item_data:dict={}) -> dict:
-
+            '''
+                item을 생성하고 셋팅
+            '''
             if item_data['type'] == QPushButton:
                 item = QPushButton('', self)
 
@@ -206,73 +216,85 @@ def main():
             return item_data
 
         def __page__(self, title:str):
-                page:dict = page_data[title]
-                template:str = page['template']
-                items:dict = page['items']
-                window:dict = page['window']
+            '''
+                page를 생성하고 셋팅
+            '''
+            page:dict = page_data[title]
+            template:str = page['template']
+            items:dict = page['items']
+            window:dict = page['window']
 
-                rect_data = page_template[template]
-                column_index = 0
-                row_index = 0
-                for item_key in items:
-                    item_data = items[item_key]
-                    item_type = item_data['type']
-                    self.__item__(item_data)
-                    if template == '메뉴 스타일':
-                        if item_type == QLabel:
-                            item_data['rect'] = (rect_data['x'], rect_data['y']*1+rect_data['dep']*row_index, rect_data['input_w'], rect_data['input_h'])
-                            row_index += 1
+            rect_data = page_template[template]
+            column_index = 0
+            row_index = 0
+            for item_key in items:
+                item_data = items[item_key]
+                item_type = item_data['type']
+                self.__item__(item_data)
+                if template == '메뉴 스타일':
+                    if item_type == QLabel:
+                        item_data['rect'] = (rect_data['x'], rect_data['y']*1+rect_data['dep']*row_index, rect_data['input_w'], rect_data['input_h'])
+                        row_index += 1
 
-                        else:
-                            item_data['rect'] = (rect_data['x'], rect_data['y']*1+rect_data['dep']*row_index, rect_data['bt_w'], rect_data['bt_h'])
-                            row_index += 1
-                            
-                    elif template == 'input 스타일':
-
-                        if item_type == QLabel:
-                            item_data['rect'] = (rect_data['x'], rect_data['y']*1+rect_data['dep']*column_index, rect_data['input_w'], rect_data['input_h'])
-                            column_index += 1
-
-                        elif item_type == QPushButton:
-                            item_data['rect'] = (rect_data['x']*(row_index+1)+rect_data['bt_w']*row_index, rect_data['y']*1+rect_data['dep']*column_index, rect_data['bt_w'], rect_data['bt_h'])
-                            row_index += 1
-
-                        else:
-                            item_data['rect'] = (rect_data['x'], rect_data['y']*1+rect_data['dep']*column_index, rect_data['input_w'], rect_data['input_h'])
-                            column_index += 1
-
-                    elif template == 'input 라벨 스타일':
+                    else:
+                        item_data['rect'] = (rect_data['x'], rect_data['y']*1+rect_data['dep']*row_index, rect_data['bt_w'], rect_data['bt_h'])
+                        row_index += 1
                         
-                        if item_type == QPushButton:
-                            item_data['rect'] = (rect_data['x']*(1+column_index)+rect_data['bt_w']*column_index, rect_data['y']*2+rect_data['dep']*row_index, rect_data['bt_w'], rect_data['bt_h'])
-                            column_index += 1
+                elif template == 'input 스타일':
 
-                        elif item_type == QLineEdit:
-                            item_data['rect'] = (rect_data['x'], rect_data['y']*1+rect_data['dep']*row_index-3, rect_data['input_w'], rect_data['input_h'])
-                            row_index += 1
-                        
-                        else:
-                            item_data['rect'] = (rect_data['x'], rect_data['y']*1+rect_data['dep']*row_index, rect_data['input_w'], rect_data['input_h'])
-                            row_index += 1
+                    if item_type == QLabel:
+                        item_data['rect'] = (rect_data['x'], rect_data['y']*1+rect_data['dep']*column_index, rect_data['input_w'], rect_data['input_h'])
+                        column_index += 1
+
+                    elif item_type == QPushButton:
+                        item_data['rect'] = (rect_data['x']*(row_index+1)+rect_data['bt_w']*row_index, rect_data['y']*1+rect_data['dep']*column_index, rect_data['bt_w'], rect_data['bt_h'])
+                        row_index += 1
+
+                    else:
+                        item_data['rect'] = (rect_data['x'], rect_data['y']*1+rect_data['dep']*column_index, rect_data['input_w'], rect_data['input_h'])
+                        column_index += 1
+
+                elif template == 'input 라벨 스타일':
                     
-                        
-                    elif template == '테이블 스타일':
-                        if item_type == QPushButton:
-                            item_data['rect'] = ( rect_data['x']*(row_index+1)+rect_data['bt_w']*row_index, rect_data['y']*1+rect_data['dep']*column_index, rect_data['bt_w'], rect_data['bt_h'] )
-                            row_index += 1
+                    if item_type == QPushButton:
+                        item_data['rect'] = (rect_data['x']*(1+column_index)+rect_data['bt_w']*column_index, rect_data['y']*2+rect_data['dep']*row_index, rect_data['bt_w'], rect_data['bt_h'])
+                        column_index += 1
 
-                        elif item_type == table_model:
-                            column_index += 1
-                            item_data['rect'] = ( rect_data['x']*1+rect_data['bt_w']*0, rect_data['y']*1+rect_data['dep']*column_index, window['window_w']-rect_data['x']*2, window['window_h']-rect_data['y']*2-rect_data['dep']*1 )
+                    elif item_type == QLineEdit:
+                        item_data['rect'] = (rect_data['x'], rect_data['y']*1+rect_data['dep']*row_index-3, rect_data['input_w'], rect_data['input_h'])
+                        row_index += 1
+                    
+                    else:
+                        item_data['rect'] = (rect_data['x'], rect_data['y']*1+rect_data['dep']*row_index, rect_data['input_w'], rect_data['input_h'])
+                        row_index += 1
+                
+                    
+                elif template == '테이블 스타일':
+                    if item_type == QPushButton:
+                        item_data['rect'] = ( rect_data['x']*(row_index+1)+rect_data['bt_w']*row_index, rect_data['y']*1+rect_data['dep']*column_index, rect_data['bt_w'], rect_data['bt_h'] )
+                        row_index += 1
 
-                        else:
-                            item_data['rect'] = ( rect_data['x']*1, rect_data['y']*1+rect_data['dep']*column_index, rect_data['label_w'], rect_data['label_h'] )
-                            column_index += 1
+                    elif item_type == table_model:
+                        column_index += 1
+                        item_data['rect'] = ( rect_data['x']*1+rect_data['bt_w']*0, rect_data['y']*1+rect_data['dep']*column_index, window['window_w']-rect_data['x']*2, window['window_h']-rect_data['y']*2-rect_data['dep']*1 )
 
-                    rect = item_data['rect']
-                    item_data['id'].setGeometry(rect[0],rect[1],rect[2],rect[3])
+                    else:
+                        item_data['rect'] = ( rect_data['x']*1, rect_data['y']*1+rect_data['dep']*column_index, rect_data['label_w'], rect_data['label_h'] )
+                        column_index += 1
 
-        def __token__(self, email):
+                rect = item_data['rect']
+                item_data['id'].setGeometry(rect[0],rect[1],rect[2],rect[3])
+
+        def __token__(self, email:str) -> dict:
+            '''
+                토큰 데이터 생성
+
+                token = {
+                    "email": str, 
+                    "datetime": str,
+                    "token": str,
+                }
+            '''
             date_time = now_time()
             token = {
                 'email':email,
@@ -282,10 +304,17 @@ def main():
             return token
 
         def page_setting(self, page_data:dict):
+            '''
+                page_data를 조회하여 page 셋팅
+            '''
             for title in page_data:
                 self.__page__(title)
 
-        def page_change(self, page_title:int, history=True):
+        def page_change(self, page_title:str, history:bool=True):
+            '''
+                page_title을 활용하여 page 변경
+                history: bool self.__page_history__에 기록 여부
+            '''
             if page_title == '':
                 page_title = self.__main_page__
 
@@ -309,6 +338,9 @@ def main():
                 self.__page_history__.append(self.windowTitle())
 
         def page_back(self):
+            '''
+                바로 이전 page로 이동하고 이동전 page를 히스토리에서 제거
+            '''
             if len(self.__page_history__) > 1 :
                 last_page = self.__page_history__[-2]
             else:
@@ -319,7 +351,10 @@ def main():
             if len(self.__page_history__) > 0:
                 self.__page_history__.pop(-1)
 
-        def page_reset(self, page_title):
+        def page_reset(self, page_title:str):
+            '''
+                page 초기화 및 윈도우 창 크기 셋팅
+            '''
             
             page = page_data[page_title]
             
@@ -340,6 +375,10 @@ def main():
                 self.display_control(items=items,show=show)
 
         def display_control(self, items:dict, show:bool):
+            '''
+                item 보이기/숨기기
+                show: bool 
+            '''
             for item_key in items:
                 item_data = items[item_key]
                 item_id = item_data['id']
@@ -349,8 +388,10 @@ def main():
                 else:
                     item_id.hide()
 
-        def msg_box(self,title:str, text:str, buttons:list=[]):
+        def msg_box(self, title:str, text:str, buttons:list=[]):
             '''
+                메시지 박스 생성
+                
                 buttons: [button1, button2 ...]
 
                 button: {
@@ -371,10 +412,16 @@ def main():
             return message_box
         
         def table_set(self, page_title:str, item_key:str, data:dict={}):
+            '''
+                테이블에 데이터 셋팅
+            '''
             model = page_data[page_title]['items'][item_key]['model']
             model.data_set(data)
 
         def token_create(self, page_title:str):
+            '''
+                토큰 생성
+            '''
             items:dict = page_data[page_title]['items']
             email_id:QLineEdit = items['이메일 입력']['id']
             email = email_id.text().strip()
@@ -390,6 +437,9 @@ def main():
                 self.msg_box('실패', '이메일 값이 비어 있습니다.')
 
         def tester_create(self, page_title:str):
+            '''
+                테스터 생성
+            '''
             items:dict = page_data[page_title]['items']
             email_id:QLineEdit = items['이메일 입력']['id']
             name_id:QLineEdit = items['이름 입력']['id']
@@ -429,6 +479,9 @@ def main():
                     self.msg_box('실패','생년월일 값이 비어 있습니다.')
         
         def tester_delete(self, page_title:str):
+            '''
+                테스터 삭제
+            '''
             items:dict = page_data[page_title]['items']
             email_id:QLineEdit = items['이메일 입력']['id']
             email = email_id.text().strip()
@@ -444,6 +497,9 @@ def main():
                     self.msg_box('실패',f'존재하지 않는 이메일 입니다.\n"{email}"')
 
         def test_create(self, page_title:str):
+            '''
+                테스트 생성
+            '''
             items:dict = page_data[page_title]['items']
             test_name_id:QLineEdit = items['테스트 명 입력']['id']
             test_name = test_name_id.text().strip()
@@ -462,6 +518,9 @@ def main():
                 self.msg_box('실패','테스트 명 값이 비어 있습니다.')
 
         def test_delete(self, page_title:str):
+            '''
+                테스트 삭제
+            '''
             items:dict = page_data[page_title]['items']
             test_name_id:QLineEdit = items['테스트 명 입력']['id']
             test_name = test_name_id.text().strip()

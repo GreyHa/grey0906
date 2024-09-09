@@ -38,7 +38,7 @@ def googleCalendar_view_select(client:AOS, target:int=0):
 
     client.func_log(f'구글 캘린더 뷰 선택 완료 "{taregt_text}"', 3)
     
-def googleCalendar_event_create(client:AOS, event:dict) -> dict:
+def googleCalendar_event_create(client:AOS, event:dict):
     '''
         구글 캘린더 메인에서 사용
         - 이벤트를 생성
@@ -85,7 +85,6 @@ def googleCalendar_event_create(client:AOS, event:dict) -> dict:
     client(el.googleCalendar_eventCreate_bt_save).Click()
 
     client.func_log(f'구글 캘린더 이벤트 생성 완료 event: "{event}"', 3)
-    return event
 
 
 def datePicker_select(client:AOS, stringDate:str):

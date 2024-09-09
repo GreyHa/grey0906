@@ -25,13 +25,6 @@ def googleCalendar_menu_bt_view(text:str, contains=False) -> dict:
         return {'Type':'xpath','Target':f'//android.widget.ListView[@resource-id="com.google.android.calendar:id/drawer_list"]//android.widget.TextView[@content-desc="{text}"]'}
     else:
         return {'Type':'xpath','Target':f'//android.widget.ListView[@resource-id="com.google.android.calendar:id/drawer_list"]//android.widget.TextView[contains(@content-desc,"{text}")]'}
-    
-#googleCalendar_menu_bt_schedule = {'Type':'xpath','Target':'//android.widget.ListView[@resource-id="com.google.android.calendar:id/drawer_list"]//android.widget.TextView[contains(@content-desc,"Schedule view")]'}
-#googleCalendar_menu_bt_day = {'Type':'xpath','Target':'//android.widget.ListView[@resource-id="com.google.android.calendar:id/drawer_list"]//android.widget.TextView[contains(@content-desc,"Day view")]'}
-#googleCalendar_menu_bt_3day = {'Type':'xpath','Target':'//android.widget.ListView[@resource-id="com.google.android.calendar:id/drawer_list"]//android.widget.TextView[contains(@content-desc,"3-days view")]'}
-#googleCalendar_menu_bt_week = {'Type':'xpath','Target':'//android.widget.ListView[@resource-id="com.google.android.calendar:id/drawer_list"]//android.widget.TextView[contains(@content-desc,"Week view")]'}
-#googleCalendar_menu_bt_month = {'Type':'xpath','Target':'//android.widget.ListView[@resource-id="com.google.android.calendar:id/drawer_list"]//android.widget.TextView[contains(@content-desc,"Month view")]'}
-#googleCalendar_menu_bt_selected = {'Type':'xpath','Target':'//android.widget.ListView[@resource-id="com.google.android.calendar:id/drawer_list"]//android.widget.TextView[contains(@content-desc,"Selected")]'}
 
 googleCalendar_expand_layout = {'Type':'xpath','Target':'//android.widget.FrameLayout[@resource-id="com.google.android.calendar:id/alternate_timeline_holder"]/android.widget.FrameLayout//android.widget.FrameLayout[@resource-id="com.google.android.calendar:id/timely_date_picker_container"]'}
 googleCalendar_expand_bts_date = {'Type':'xpath','Target':'//android.widget.FrameLayout[@resource-id="com.google.android.calendar:id/alternate_timeline_holder"]/android.widget.FrameLayout//android.widget.FrameLayout[@resource-id="com.google.android.calendar:id/timely_date_picker_container"]//androidx.viewpager.widget.ViewPager/android.view.View/android.view.View'}
