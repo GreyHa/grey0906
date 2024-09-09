@@ -14,6 +14,7 @@ pip install selenium==4.24.0
 pip install Appium-Python-Client==4.1.0
 pip install PyQt6==6.7.1
 pip install requests==2.31.0
+pip install chromedriver-autoinstaller==0.6.4
 
 사용하지 않지만 서브 모듈에서 사용 중이라 설치 필요한 모듈
 pip install numpy==1.26.4
