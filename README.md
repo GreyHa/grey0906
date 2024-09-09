@@ -4,3 +4,5 @@ git submodule update
 git submodule foreach git checkout dev
 
 appium --allow-insecure adb_shell
+
+pip install PyQt6

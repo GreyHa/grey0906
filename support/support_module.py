@@ -1,4 +1,15 @@
-import os, json
+import time, os, json, traceback
+
+def now_time(return_format='%Y-%m-%d %H:%M:%S'):
+    return time.strftime(return_format,time.localtime(time.time()))
+
+def path_create(dir_path):
+    if dir_path:
+        if not os.path.exists(dir_path):
+            try:
+                os.makedirs(os.path.join(dir_path))
+            except:
+                print(f'{traceback.format_exc()}\n"{dir_path}"')
 
 def json_load(json_path:str, encoding='utf-8', none_data={}):
     if os.path.isfile(json_path):
@@ -12,7 +23,8 @@ def json_dump(json_path:str, data, encoding='utf-8'):
     '''
         data: list 또는 dict
     '''
-    json_dump = json.dump(data, indent='\t', ensure_ascii=False)
+
+    json_dump = json.dumps(data, indent='\t', ensure_ascii=False)
     file = open(json_path, mode='w', encoding=encoding)
     file.write(json_dump)
     file.close()
