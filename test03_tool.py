@@ -493,7 +493,10 @@ def main():
             email_id:QLineEdit = items['이메일 입력']['id']
             email = email_id.text().strip()
             
-            if email in token_data:
+            if test_data == {}:
+                self.msg_box('실패',f'테스트가 존재하지 않습니다.\n테스트를 추가해주세요.')
+
+            elif email in token_data:
                 self.msg_box('정보',dict_to_text('토큰 정보',token_data[email]))
 
                 if email in tester_data:
