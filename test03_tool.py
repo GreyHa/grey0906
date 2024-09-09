@@ -67,6 +67,7 @@ def main():
             self.setWindowTitle(self.__main_page__)
 
             page_data['테스트 툴']['items'] = {
+                '타이틀 라벨':{'type':QLabel, 'setText':'테스트 툴'},
                 '토큰 획득':{'type':QPushButton, 'setText':'토큰 획득', 'clicked.connect': lambda: self.page_change('토큰 획득')},
                 '테스터 정보 관리':{'type':QPushButton, 'setText':'테스터 정보 관리', 'clicked.connect': lambda: self.page_change('테스터 정보 관리')},
                 '테스트 관리':{'type':QPushButton, 'setText':'테스트 관리', 'clicked.connect': lambda: self.page_change('테스트 관리')},
@@ -76,12 +77,14 @@ def main():
 
 
             page_data['토큰 획득']['items'] = {
+                '타이틀 라벨':{'type':QLabel, 'setText':'토큰 획득'},
                 '이메일 입력':{'type':QLineEdit, 'setPlaceholderText':'이메일을 일력하세요.'},
                 '뒤로가기':{'type':QPushButton, 'setText':'뒤로가기', 'clicked.connect': lambda: self.page_back()},
                 '저장':{'type':QPushButton, 'setText':'저장', 'clicked.connect': lambda: self.token_create('토큰 획득')}
             }
 
             page_data['테스터 정보 관리']['items'] = {
+                '타이틀 라벨':{'type':QLabel, 'setText':'테스터 정보 관리'},
                 '저장된 테스터 정보':{'type':QPushButton, 'setText':'저장된 테스터 정보', 'clicked.connect': lambda: (self.table_set('저장된 테스터 정보', '테이블', {}), self.table_set('저장된 테스터 정보', '테이블', tester_data), self.page_change('저장된 테스터 정보'))},
                 '테스터 정보 추가':{'type':QPushButton, 'setText':'테스터 정보 추가', 'clicked.connect': lambda: self.page_change('테스터 정보 추가')},
                 '테스터 정보 삭제':{'type':QPushButton, 'setText':'테스터 정보 삭제', 'clicked.connect': lambda: self.page_change('테스터 정보 삭제')},
@@ -89,11 +92,13 @@ def main():
             }
 
             page_data['저장된 테스터 정보']['items'] = {
+                '타이틀 라벨':{'type':QLabel, 'setText':'저장된 테스터 정보'},
                 '뒤로가기':{'type':QPushButton, 'setText':'뒤로가기', 'clicked.connect': lambda: self.page_back()},
                 '테이블':{'type':table_model, 'col_list': tester_keys, 'data':{}},
             }
 
             page_data['테스터 정보 추가']['items'] = {
+                '타이틀 라벨':{'type':QLabel, 'setText':'테스터 정보 추가'},
                 '이메일 입력 라벨':{'type':QLabel, 'setText':'이메일'},
                 '이메일 입력':{'type':QLineEdit, 'setPlaceholderText':'이메일을 일력하세요.'},
                 '이름 입력 라벨':{'type':QLabel, 'setText':'이름'},
@@ -107,12 +112,14 @@ def main():
             }
 
             page_data['테스터 정보 삭제']['items'] = {
+                '타이틀 라벨':{'type':QLabel, 'setText':'테스터 정보 삭제'},
                 '이메일 입력':{'type':QLineEdit, 'setPlaceholderText':'이메일을 일력하세요.'},
                 '뒤로가기':{'type':QPushButton, 'setText':'뒤로가기', 'clicked.connect': lambda: self.page_back()},
                 '삭제':{'type':QPushButton, 'setText':'삭제', 'clicked.connect': lambda: self.tester_delete('테스터 정보 삭제')}
             }
 
             page_data['테스트 관리']['items'] = {
+                '타이틀 라벨':{'type':QLabel, 'setText':'테스트 관리'},
                 '저장된 테스트 정보':{'type':QPushButton, 'setText':'저장된 테스트 정보', 'clicked.connect': lambda: (self.table_set('저장된 테스트 정보', '테이블', {}), self.table_set('저장된 테스트 정보', '테이블', test_data), self.page_change('저장된 테스트 정보'))},
                 '테스트 추가':{'type':QPushButton, 'setText':'테스트 추가', 'clicked.connect': lambda: self.page_change('테스트 추가')},
                 '테스트 삭제':{'type':QPushButton, 'setText':'테스트 삭제', 'clicked.connect': lambda: self.page_change('테스트 삭제')},
@@ -120,11 +127,13 @@ def main():
             }
 
             page_data['저장된 테스트 정보']['items'] = {
+                '타이틀 라벨':{'type':QLabel, 'setText':'저장된 테스트 정보'},
                 '뒤로가기':{'type':QPushButton, 'setText':'뒤로가기', 'clicked.connect': lambda: self.page_back()},
                 '테이블':{'type':table_model, 'col_list': test_keys, 'data':{}},
             }
 
             page_data['테스트 추가']['items'] = {
+                '타이틀 라벨':{'type':QLabel, 'setText':'테스트 추가'},
                 '테스트 명 입력 라벨':{'type':QLabel, 'setText':'테스트 명'},
                 '테스트 명 입력':{'type':QLineEdit, 'setPlaceholderText':'테스트 명을 일력하세요.'},
                 '뒤로가기':{'type':QPushButton, 'setText':'뒤로가기', 'clicked.connect': lambda: self.page_back()},
@@ -132,6 +141,7 @@ def main():
             }
 
             page_data['테스트 삭제']['items'] = {
+                '타이틀 라벨':{'type':QLabel, 'setText':'테스트 삭제'},
                 '테스트 명 입력':{'type':QLineEdit, 'setPlaceholderText':'테스트 명을 일력하세요.'},
                 '뒤로가기':{'type':QPushButton, 'setText':'뒤로가기', 'clicked.connect': lambda: self.page_back()},
                 '삭제':{'type':QPushButton, 'setText':'삭제', 'clicked.connect': lambda: self.test_delete('테스트 삭제')}
@@ -139,6 +149,7 @@ def main():
             }
 
             page_data['테스트 시작']['items'] = {
+                '타이틀 라벨':{'type':QLabel, 'setText':'테스트 시작'},
                 '이메일 입력':{'type':QLineEdit, 'setPlaceholderText':'이메일을 일력하세요.'},
                 '뒤로가기':{'type':QPushButton, 'setText':'뒤로가기', 'clicked.connect': lambda: self.page_back()},
                 '시작':{'type':QPushButton, 'setText':'시작', 'clicked.connect': lambda: self.test_start('테스트 시작')}
@@ -208,16 +219,26 @@ def main():
                     item_type = item_data['type']
                     self.__item__(item_data)
                     if template == '메뉴 스타일':
-                        item_data['rect'] = (rect_data['x'], rect_data['y']*1+rect_data['dep']*row_index, rect_data['bt_w'], rect_data['bt_h'])
-                        row_index += 1
-                        
-                    elif template == 'input 스타일':
-                        if item_type == QPushButton:
-                            item_data['rect'] = (rect_data['x']*(row_index+1)+rect_data['bt_w']*row_index, rect_data['y']*column_index+rect_data['dep']*column_index, rect_data['bt_w'], rect_data['bt_h'])
+                        if item_type == QLabel:
+                            item_data['rect'] = (rect_data['x'], rect_data['y']*1+rect_data['dep']*row_index, rect_data['input_w'], rect_data['input_h'])
                             row_index += 1
 
                         else:
-                            item_data['rect'] = (rect_data['x'], rect_data['y']*1+rect_data['dep']*row_index, rect_data['input_w'], rect_data['input_h'])
+                            item_data['rect'] = (rect_data['x'], rect_data['y']*1+rect_data['dep']*row_index, rect_data['bt_w'], rect_data['bt_h'])
+                            row_index += 1
+                            
+                    elif template == 'input 스타일':
+
+                        if item_type == QLabel:
+                            item_data['rect'] = (rect_data['x'], rect_data['y']*1+rect_data['dep']*column_index, rect_data['input_w'], rect_data['input_h'])
+                            column_index += 1
+
+                        elif item_type == QPushButton:
+                            item_data['rect'] = (rect_data['x']*(row_index+1)+rect_data['bt_w']*row_index, rect_data['y']*1+rect_data['dep']*column_index, rect_data['bt_w'], rect_data['bt_h'])
+                            row_index += 1
+
+                        else:
+                            item_data['rect'] = (rect_data['x'], rect_data['y']*1+rect_data['dep']*column_index, rect_data['input_w'], rect_data['input_h'])
                             column_index += 1
 
                     elif template == 'input 라벨 스타일':
@@ -237,14 +258,18 @@ def main():
                         
                     elif template == '테이블 스타일':
                         if item_type == QPushButton:
-                            item_data['rect'] = ( rect_data['x']*(row_index+1)+rect_data['bt_w']*row_index, rect_data['y']*1+rect_data['dep']*0, rect_data['bt_w'], rect_data['bt_h'] )
+                            item_data['rect'] = ( rect_data['x']*(row_index+1)+rect_data['bt_w']*row_index, rect_data['y']*1+rect_data['dep']*column_index, rect_data['bt_w'], rect_data['bt_h'] )
                             row_index += 1
 
+                        elif item_type == table_model:
+                            column_index += 1
+                            item_data['rect'] = ( rect_data['x']*1+rect_data['bt_w']*0, rect_data['y']*1+rect_data['dep']*column_index, window['window_w']-rect_data['x']*2, window['window_h']-rect_data['y']*2-rect_data['dep']*1 )
+
                         else:
-                            item_data['rect'] = ( rect_data['x']*1+rect_data['bt_w']*0, rect_data['y']*1+rect_data['dep']*1, window['window_w']-rect_data['x']*2, window['window_h']-rect_data['y']*2-rect_data['dep']*1 )
+                            item_data['rect'] = ( rect_data['x']*1, rect_data['y']*1+rect_data['dep']*column_index, rect_data['label_w'], rect_data['label_h'] )
                             column_index += 1
 
-                    rect = item_data['rect']                
+                    rect = item_data['rect']
                     item_data['id'].setGeometry(rect[0],rect[1],rect[2],rect[3])
 
         def __token__(self, email):
@@ -324,7 +349,7 @@ def main():
                 else:
                     item_id.hide()
 
-        def msg_box(self,text:str, buttons:list=[]):
+        def msg_box(self,title:str, text:str, buttons:list=[]):
             '''
                 buttons: [button1, button2 ...]
 
@@ -334,6 +359,7 @@ def main():
                 }
             '''
             message_box = QMessageBox()
+            message_box.setWindowTitle(title)
             message_box.setText(text)
 
             if buttons != {}:
@@ -356,12 +382,12 @@ def main():
             if email != '':
                 token_data[email] = self.__token__(email)
                 json_dump(token_data_file_path, data=token_data)
-                self.msg_box('토큰 획득 완료')
+                self.msg_box('성공', '토큰 획득 완료')
                 email_id.setText('')
                 self.page_back()
                 
             else:
-                self.msg_box('이메일 값이 비어 있습니다.')
+                self.msg_box('실패', '이메일 값이 비어 있습니다.')
 
         def tester_create(self, page_title:str):
             items:dict = page_data[page_title]['items']
@@ -385,22 +411,22 @@ def main():
                         '생년월일': birthday
                     }
                     json_dump(tester_data_file_path, tester_data)
-                    self.msg_box('테스터 정보 추가 완료')
+                    self.msg_box('성공','테스터 정보 추가 완료')
                     email_id.setText('')
                     name_id.setText('')
                     tell_id.setText('')
                     birthday_id.setDate(QDate.currentDate().addYears(-12))
                 else:
-                    self.msg_box(f'중복된 이메일 입니다.\n"{email}"')
+                    self.msg_box('실패',f'중복된 이메일 입니다.\n"{email}"')
             else:
                 if email == '':
-                    self.msg_box('이메일 값이 비어 있습니다.')
+                    self.msg_box('실패','이메일 값이 비어 있습니다.')
                 elif name == '':
-                    self.msg_box('이름 값이 비어 있습니다.')
+                    self.msg_box('실패','이름 값이 비어 있습니다.')
                 elif tell == '':
-                    self.msg_box('핸드폰 번호 값이 비어 있습니다.')
+                    self.msg_box('실패','핸드폰 번호 값이 비어 있습니다.')
                 elif birthday == '':
-                    self.msg_box('생년월일 값이 비어 있습니다.')
+                    self.msg_box('실패','생년월일 값이 비어 있습니다.')
         
         def tester_delete(self, page_title:str):
             items:dict = page_data[page_title]['items']
@@ -408,14 +434,14 @@ def main():
             email = email_id.text().strip()
             if email != '':
                 if email in tester_data.keys():
-                    msg_box = self.msg_box(f'"{email}"\n테스터 정보를 삭제하시겠습니까?', buttons=[{'text':'삭제', 'role': QMessageBox.ButtonRole.DestructiveRole},{'text':'취소', 'role':QMessageBox.ButtonRole.RejectRole}])
+                    msg_box = self.msg_box('확인',f'"{email}"\n테스터 정보를 삭제하시겠습니까?', buttons=[{'text':'삭제', 'role': QMessageBox.ButtonRole.DestructiveRole},{'text':'취소', 'role':QMessageBox.ButtonRole.RejectRole}])
                     if msg_box.buttonRole(msg_box.clickedButton()) == QMessageBox.ButtonRole.DestructiveRole:
                         tester_data.pop(email)
                         json_dump(tester_data_file_path, tester_data)
-                        self.msg_box('테스터 정보 삭제 완료')
+                        self.msg_box('성공','테스터 정보 삭제 완료')
                         email_id.setText('')
                 else:
-                    self.msg_box(f'존재하지 않는 이메일 입니다.\n"{email}"')
+                    self.msg_box('실패',f'존재하지 않는 이메일 입니다.\n"{email}"')
 
         def test_create(self, page_title:str):
             items:dict = page_data[page_title]['items']
@@ -428,12 +454,12 @@ def main():
                         '테스트 명': test_name,
                     }
                     json_dump(test_data_file_path, test_data)
-                    self.msg_box('테스트 정보 추가 완료')
+                    self.msg_box('성공','테스트 정보 추가 완료')
                     test_name_id.setText('')
                 else:
-                    self.msg_box(f'중복된 테스트 명 입니다.\n"{test_name}"')
+                    self.msg_box('실패',f'중복된 테스트 명 입니다.\n"{test_name}"')
             else:
-                self.msg_box('테스트 명 값이 비어 있습니다.')
+                self.msg_box('실패','테스트 명 값이 비어 있습니다.')
 
         def test_delete(self, page_title:str):
             items:dict = page_data[page_title]['items']
@@ -441,14 +467,14 @@ def main():
             test_name = test_name_id.text().strip()
             if test_name != '':
                 if test_name in test_data.keys():
-                    msg_box = self.msg_box(f'"{test_name}"\n테스트 정보를 삭제하시겠습니까?', buttons=[{'text':'삭제', 'role': QMessageBox.ButtonRole.DestructiveRole},{'text':'취소', 'role':QMessageBox.ButtonRole.RejectRole}])
+                    msg_box = self.msg_box('확인',f'"{test_name}"\n테스트 정보를 삭제하시겠습니까?', buttons=[{'text':'삭제', 'role': QMessageBox.ButtonRole.DestructiveRole},{'text':'취소', 'role':QMessageBox.ButtonRole.RejectRole}])
                     if msg_box.buttonRole(msg_box.clickedButton()) == QMessageBox.ButtonRole.DestructiveRole:
                         test_data.pop(test_name)
                         json_dump(test_data_file_path, test_data)
-                        self.msg_box('테스트 정보 삭제 완료')
+                        self.msg_box('성공','테스트 정보 삭제 완료')
                         test_name_id.setText('')
                 else:
-                    self.msg_box(f'존재하지 않는 테스트 명 입니다.\n"{test_name}"')
+                    self.msg_box('실패',f'존재하지 않는 테스트 명 입니다.\n"{test_name}"')
 
         def test_start(self, page_title:str):
             '''
@@ -468,18 +494,18 @@ def main():
             email = email_id.text().strip()
             
             if email in token_data:
-                self.msg_box(dict_to_text('토큰 정보',token_data[email]))
+                self.msg_box('정보',dict_to_text('토큰 정보',token_data[email]))
 
                 if email in tester_data:
-                    self.msg_box(dict_to_text('테스터 정보',tester_data[email]))
+                    self.msg_box('정보',dict_to_text('테스터 정보',tester_data[email]))
 
                     for test_name in test_data:
-                        self.msg_box(dict_to_text('테스트 정보',test_data[test_name]))
+                        self.msg_box('정보',dict_to_text('테스트 정보',test_data[test_name]))
 
                 else:
-                    self.msg_box(f'존재하지 않는 테스터 입니다.\n"{email}"')
+                    self.msg_box('실패',f'존재하지 않는 테스터 입니다.\n"{email}"')
             else:
-                self.msg_box(f'존재하지 않는 토큰 입니다.\n"{email}"')
+                self.msg_box('실패',f'존재하지 않는 토큰 입니다.\n"{email}"')
 
     app = QApplication(sys.argv)
     window = MainWindow()
