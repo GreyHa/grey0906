@@ -7,6 +7,7 @@ npm 10.7.0
 appium 2.5.4
 Java 22.0.1
 Android Studio 2023.2.1 Patch 1
+Google Chrome 128.0.6613.120
 
 python 사용 모듈
 pip install selenium==4.24.0
