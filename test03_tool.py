@@ -7,14 +7,14 @@ import sys, os, base64
 
 base_path = os.path.dirname(os.path.abspath(__file__))
 data_path = f'{base_path}/tooldata'
-token_file_path = f'{data_path}/token.json'
+token_data_file_path = f'{data_path}/token.json'
 tester_data_file_path = f'{data_path}/testerconf.json'
 test_data_file_path = f'{data_path}/testconf.json'
 path_create(data_path)
 
-token_data:dict = json_load(token_file_path)
-tester_data:dict = json_load(tester_data_file_path)
-test_data:dict = json_load(test_data_file_path)
+token_data:dict = json_load(token_data_file_path, none_data={})
+tester_data:dict = json_load(tester_data_file_path, none_data={})
+test_data:dict = json_load(test_data_file_path, none_data={})
 
 tester_keys = ['이메일','이름','핸드폰 번호','생년월일']
 test_keys = ['테스트 명']
@@ -355,10 +355,11 @@ def main():
             # email 패턴 검증 필요시 로직 추가 지금은 공백 예외 처리
             if email != '':
                 token_data[email] = self.__token__(email)
-                json_dump(token_file_path, data=token_data)
+                json_dump(token_data_file_path, data=token_data)
                 self.msg_box('토큰 획득 완료')
                 email_id.setText('')
                 self.page_back()
+                
             else:
                 self.msg_box('이메일 값이 비어 있습니다.')
 
@@ -422,7 +423,7 @@ def main():
             test_name = test_name_id.text().strip()
             
             if test_name != '':
-                if test_name not in tester_data.keys():
+                if test_name not in test_data.keys():
                     test_data[test_name] = {
                         '테스트 명': test_name,
                     }
