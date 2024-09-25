@@ -13,7 +13,7 @@ base_path = os.path.dirname(os.path.abspath(__file__))
 config_file_path = f'{base_path}/conf/test02.json'
 clientinfo = json_load(config_file_path, none_data={})
 clientinfo['screenshot_path'] = f'{base_path}/screenshot'
-clientinfo['log_file_path'] = f'{base_path}/log/{time.strftime('%Y_%m_%d_%H_%M_%S',time.localtime(time.time()))}.txt'
+clientinfo['log_file_path'] = f'{base_path}/log/{time.strftime("%Y_%m_%d_%H_%M_%S",time.localtime(time.time()))}.txt'
 
 event1 = {
     'title': f'빼빼로 데이 {start_time}', # 타이틀이 중복 된 경우 비교하기 힘들기 때문에 타임스탬프 추가

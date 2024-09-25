@@ -15,7 +15,7 @@ config_file_path = f'{base_path}/conf/test01.json'
 clientinfo = json_load(config_file_path, none_data={})
 clientinfo['executable_path'] = chrome_driver_path
 clientinfo['screenshot_path'] = f'{base_path}/screenshot'
-clientinfo['log_file_path'] = f'{base_path}/log/{time.strftime('%Y_%m_%d_%H_%M_%S',time.localtime(time.time()))}.txt'
+clientinfo['log_file_path'] = f'{base_path}/log/{time.strftime("%Y_%m_%d_%H_%M_%S",time.localtime(time.time()))}.txt'
 
 # 셋팅
 client = Web(clientinfo=clientinfo)
